@@ -40,10 +40,24 @@ io.on("connection", newConnection); // stiamo dicendo: quando c'è un messaggio 
 function newConnection(socket) { // questa funzione ci fornisce la connessione unica che c'è con il cliente
   console.log("new connection: " + socket.client.id);
 
+  let clientColor = getRandomColor();
+  socket.emit("color", clientColor); 
+
   socket.on("mouse", mouseMessage); // qui diciamo di darci le informazioni sul mouse come messaggio che viene dal cliente, eseguita tramite la funzione mouseMessage
 
   function mouseMessage(dataReceived) { // in questo modo vediamo nel terminal la posizione della x e della y, stiamo mandando le informazioni del mouse del cliente al server
     console.log(socket.client.it, dataReceived); // ci dice l'id del cliente che provoca i dati
     socket.broadcast.emit("mouseBroadcast", dataReceived); // in questo modo diciamo di inviare il messaggio al server e agli altri utenti, ma senza che venga rinviato a noi
   }
+}
+
+
+    // aggiungiamo la funzione che assegna un colore random a ogni utente diverso
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
 }
