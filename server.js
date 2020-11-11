@@ -37,12 +37,13 @@ let io = socket(server); // così creiamo un socket che va definito con la dicit
 
 io.on("connection", newConnection); // stiamo dicendo: quando c'è un messaggio connection eseguisci la funzione new connection
 
-function newConnection(socket) {
+function newConnection(socket) { // questa funzione ci fornisce la connessione unica che c'è con il cliente
   console.log("new connection: " + socket.client.id);
 
-  socket.on("mouse", mouseMessage);
+  socket.on("mouse", mouseMessage); // qui diciamo di darci le informazioni sul mouse come messaggio che viene dal cliente, eseguita tramite la funzione mouseMessage
 
-  function mouseMessage(dataRecived) { // in questo modo vediamo nel terminal la posizione della x e della y, stiamo mandando le informazioni del mouse del cliente al server
-    console.log(dataRecived); 
+  function mouseMessage(dataReceived) { // in questo modo vediamo nel terminal la posizione della x e della y, stiamo mandando le informazioni del mouse del cliente al server
+    console.log(socket.client.it, dataReceived); // ci dice l'id del cliente che provoca i dati
+    socket.broadcast.emit("mouseBroadcast", dataReceived); // in questo modo diciamo di inviare il messaggio al server e agli altri utenti, ma senza che venga rinviato a noi
   }
 }

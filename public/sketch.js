@@ -2,9 +2,15 @@ let socket = io(); // in questo modo mettiamo nel nostro file js la libreria soc
 // dobbiamo collegare la libreria socket anche qui perchè ci serve per mandare dati tra server e pc
 
 socket.on("connect", newConnection);
+socket.on("mouseBroadcast", drawOtherMouse); // la virgola significa "eseguito attraverso"
 
 function newConnection() {
   console.log("your id: " + socket.id); // in questo modo vedo nella console l'id di chi si è connesso
+}
+
+function drawOtherMouse(data) { // questa variabile contiene i dati ricevuti dal server
+  fill("yellow");
+  ellipse(data.x, data.y, 10);
 }
 
 function preload(){
@@ -22,6 +28,7 @@ function draw() {
 }
 
 function mouseMoved() {
+  fill("white");
   ellipse(mouseX, mouseY, 20);
   // creaiamo il messaggio
   let message = { // stiamo rilevando le coordinate del mouse x e y e le impacchettiamo nella variabile message
