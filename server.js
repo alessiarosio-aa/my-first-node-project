@@ -14,7 +14,7 @@ let socket = require("socket.io"); // io sta per input e output
 
 let app = express();
 
-let port = 3000;
+let port = process.env.PORT || 3000; // questo fa sì che Heroku faccia partire direttamente il progetto online oppure (||) che non è sul web di farlo partire in locale
 
 let server = app.listen(port);
 
