@@ -41,7 +41,9 @@ function newConnection(socket) { // questa funzione ci fornisce la connessione u
   console.log("new connection: " + socket.client.id);
 
   let clientColor = getRandomColor();
-  socket.emit("color", clientColor); 
+  socket.emit("color", clientColor); // così mandiamo il nostro colore a tutti gli altri
+
+  socket.broadcast.emit("newPlayer", clientColor);
 
   socket.on("mouse", mouseMessage); // qui diciamo di darci le informazioni sul mouse come messaggio che viene dal cliente, eseguita tramite la funzione mouseMessage
 

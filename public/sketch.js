@@ -5,8 +5,25 @@ let myColor = "white";
 socket.on("connect", newConnection);
 socket.on("mouseBroadcast", drawOtherMouse); // la virgola significa "eseguito attraverso"
 socket.on("color", setColor);
+socket.on("newPlayer", newPlayer)
     // prima mandiamo come messaggio quello della nuova connessione, poi le coordinate del mouse, poi il colore. Tutti questi sono messaggi
     // tutte queste sono riferite ai socket.emit che sono scirtti nel server.js
+
+function newPlayer(newPlayerColor) {
+  console.log(newPlayerColor);
+
+  push();
+  fill("pink");
+  rectMode(CENTER);
+  noStroke();
+  rect(width / 2, height / 2 + 30, width, 40);
+
+  textSize(15);
+  textAlign(CENTER);
+  fill(newPlayerColor);
+  text("New player joined: " + newPlayerColor, width / 2, height / 2 + 30);
+  pop();
+}
 
 function setColor(assignedColor) {
   myColor = assignedColor;
@@ -30,7 +47,13 @@ function preload(){
 function setup() {
   createCanvas(windowWidth,windowHeight)
   background("pink");
-  // put setup code here
+
+  // push();
+  // textSize(30);
+  // textAlign(CENTER);
+  // fill(myColor);
+  // text("Welcome " + myColor, width / 2, height / 2); // in questo modo inseriamo il codice del coclore
+  // pop();
 }
 
 function draw() {
